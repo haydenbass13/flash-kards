@@ -5,9 +5,10 @@ import t from "tcomb-form-native";
 
 //utilities
 
-
 //components
 import CreateCategory from "./components/CreateCategory";
+import Categories from "./components/Categories";
+const models = require('./utils/models')
 
 //config
 const Form = t.form.Form;
@@ -28,8 +29,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentScreen: CreateCategory
+      currentScreen: Categories
     };
+    this.toggleScreen = this.toggleScreen.bind(this)
+  }
+
+  toggleScreen() {
+    if (this.state.currentScreen === Categories) {
+      this.setState({currentScreen: CreateCategory})
+    }
+    else this.setState({currentScreen: Categories})
   }
 
   render() {
@@ -37,6 +46,8 @@ class App extends React.Component {
     return (
       <View style={styles.container}>
         <Comp />
+        {/* <Button title="ClearAll" onPress={() => models._deleteAll()} /> */}
+        <Button title="Toggle" onPress={this.toggleScreen} />
       </View>
     );
   }
@@ -47,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   }
 });
 

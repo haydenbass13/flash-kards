@@ -6,13 +6,14 @@ import {
   View,
   AsyncStorage,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from "react-native";
 import t from "tcomb-form-native";
 import _ from "lodash";
 
 //utilities
-import _createCategory from "../utils/models";
+const models = require("../utils/models");
 
 //components
 import Folder from "./Folder";
@@ -36,9 +37,8 @@ class CreateCategory extends React.Component {
   }
 
   create = () => {
-    const value = this._form.getValue(); // use that ref to get the form value
     let categoryObj = {
-      name: value.name,
+      name: this.state.name,
       config: {
         easy: [],
         medium: [],
@@ -47,15 +47,16 @@ class CreateCategory extends React.Component {
         color: this.state.color
       }
     };
-    _createCategory(categoryObj);
+    models._createCategory(categoryObj);
   };
 
   click(color, e) {
+    console.log(color)
     this.setState({ color });
   }
 
   handleChange() {
-    const value = this._form.getValue();
+    // const value = this._form.getValue();
     this.setState({ name: value });
   }
 
@@ -72,15 +73,16 @@ class CreateCategory extends React.Component {
     ];
     return (
       <View style={styles.container}>
-        <Folder name={this.state.name} color={this.state.color} />
+        <Folder
+          name={this.state.name ? this.state.name : "Category Name"}
+          color={this.state.color}
+        />
         <View>
           <View style={styles.formContainer}>
-            <Form
-              type={Category}
-              ref={c => (this._form = c)}
-              options={categoryOptions}
+            <TextInput
+              style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+              onChangeText={name => this.setState({ name })}
               value={this.state.name}
-              onChange={this.handleChange}
             />
           </View>
           <View style={styles.colorContainer}>
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-evenly",
-    margin: 10,
+    margin: 10
   },
   formContainer: {
     alignSelf: "stretch"
@@ -122,11 +124,11 @@ const styles = StyleSheet.create({
   colorContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.5,
     shadowRadius: 2,
-    elevation: 1,
+    elevation: 1
   },
   colorSelect: {
     height: 40,
@@ -134,8 +136,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 5
   },
-  form: {
-  }
+  form: {}
 });
 const categoryOptions = {
   fields: {

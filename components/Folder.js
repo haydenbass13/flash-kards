@@ -10,21 +10,25 @@ import SvgUri from "react-native-svg-uri";
 // }
 
 const Folder = props => {
-  // console.log(props.name)
-  let title = props.name ? props.name.name : "Category Name";
-  let color = props.color.slice(0, props.color.length-2) + '0.8)';
+  let title = props.name
+    ? !props.name.name
+      ? props.name
+      : "Category Name"
+    : props.name;
+    // console.log(title, 'title')
+  let color = props.color.slice(0, props.color.length - 2) + "0.8)";
   return (
     <View style={{ ...styles.container }}>
       <View style={styles.folderContainer}>
-        <View style={{marginBottom:-250}}>
+        <View style={{ marginBottom: -250 }}>
           <SvgUri
             width={250}
             height={250}
             source={require("../assets/folderheader.svg")}
-            fill='black'
+            fill="black"
           />
         </View>
-        <View style={{marginBottom:-250}}>
+        <View style={{ marginBottom: -250 }}>
           <SvgUri
             width={250}
             height={250}
