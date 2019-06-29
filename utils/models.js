@@ -24,14 +24,30 @@ const _getAllCategories = async () => {
   }
 };
 
+const _getOne = async (category) => {
+  try {
+    let item = await AsyncStorage.getItem(category);
+    return item;
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
 _deleteAll = async () => {
   await AsyncStorage.clear()
 }
 
+_update = async (item) => {
+  console.log(item)
+} 
+
 module.exports ={
   _getAllCategories,
   _createCategory,
-  _deleteAll
+  _deleteAll,
+  _update,
+  _getOne
 }
 
 // AsyncStorage.getAllKeys.then((keys) => {

@@ -28,7 +28,7 @@ class Categories extends React.Component {
       let temp = JSON.parse(categories[i][1]);
       array.push([JSON.parse(categories[i][0]), JSON.parse(categories[i][1])]);
     }
-    // console.log('_________',array, '________________')
+    array = array.sort((a,b) => a[0] > b[0])
     this.setState({ categories: array });
   }
   s;
