@@ -1,14 +1,16 @@
 import { AsyncStorage } from "react-native";
 
-_createCategory = async () => {
-  try {
-    await AsyncStorage.setItem(
-      `${category.name}`,
-      JSON.stringify(category.config)
-    );
-  } catch (error) {
-    //error message?
-  }
+const _createCategory = async categoryObj => {
+  console.log(categoryObj)
+  await AsyncStorage.setItem(
+    JSON.stringify(categoryObj.name),
+    JSON.stringify(categoryObj.config),
+    () => {
+      AsyncStorage.getAllKeys((err, result) => {
+        console.log(result);
+      });
+    }
+  );
 };
 
-export default { _createCategory };
+export default _createCategory;
