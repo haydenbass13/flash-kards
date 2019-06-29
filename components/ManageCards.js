@@ -7,14 +7,15 @@ import {
   AsyncStorage,
   Button,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  ScrollView
 } from "react-native";
 
 //utilities
 
 //components
-import Folder from './Folder'
-const models = require('../utils/models')
+import Folder from "./Folder";
+const models = require("../utils/models");
 
 //config
 
@@ -22,22 +23,33 @@ class Manage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: [],
+      UID: this.props.category[0],
+      config: this.props.category[1]
     };
   }
 
   async componentDidMount() {
-   let category = await models._getOne(JSON.stringify(this.props.category));
-   console.log(category)
+    let category = await models._getOne(JSON.stringify(this.props.category));
+    console.log(category);
   }
 
   render() {
+    console.log(this.props);
     return (
       <View style={styles.container}>
-        <Folder color={this.props.color} name={this.props.name}/>
-        <View>
-          <TextInput></TextInput>
+        <View style={styles.head}>
+          <Folder
+            fontSize={20}
+            size={100}
+            color={this.props.category[1].color}
+            name={this.state.UID}
+            marginTop={90}
+          />
         </View>
+        <View />
+        <ScrollView contentContainerStyle={styles.cards}>
+          <TextInput>{JSON.stringify(this.state.config)}</TextInput>
+        </ScrollView>
       </View>
     );
   }
@@ -45,11 +57,33 @@ class Manage extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
+    marginTop: 30
     // backgroundColor: "#fff",
     // // alignItems: "center",
     // justifyContent: "center"
   },
+  head: {
+    // flex: 1,
+    // flexDirection: 'column',
+    // position: 'absolute',
+    justifyContent: "center",
+    // alignItems: 'center',
+    // justifyContent: 'flex-start',
+    height: 150
+  },
+  cards: {
+    // flex: 2,
+    // justifyContent: "center"
+    // alignItems: 'center'
+  },
+  headText: {
+    alignSelf: "center"
+    // position: 'absolute'
+  },
+  folder: {
+    alignSelf: "center"
+  }
 });
 
 export default Manage;

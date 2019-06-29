@@ -56,7 +56,7 @@ class App extends React.Component {
     let Comp = this.state.currentScreen;
     return (
       <View style={styles.container}>
-        <Comp category={this.state.category}/>
+        <Comp category={this.state.selectedCategory} setCategory={this.setCategory}/>
         {/* <Button title="ClearAll" onPress={() => models._deleteAll()} /> */}
         <View style={styles.nav}>
           <TouchableOpacity onPress={() => this.toggleScreen(CreateCategory)}>

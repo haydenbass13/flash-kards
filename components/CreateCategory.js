@@ -75,7 +75,7 @@ class CreateCategory extends React.Component {
       <View style={styles.container}>
         <Folder
           name={this.state.name ? this.state.name : "Category Name"}
-          color={this.state.color}
+          color={this.state.color} size={250} fontSize={30} marginTop={-40}
         />
         <View>
           <View style={styles.formContainer}>

@@ -28,7 +28,7 @@ class Categories extends React.Component {
       let temp = JSON.parse(categories[i][1]);
       array.push([JSON.parse(categories[i][0]), JSON.parse(categories[i][1])]);
     }
-    array = array.sort((a,b) => a[0] > b[0])
+    array = array.sort((a, b) => a[0] > b[0]);
     this.setState({ categories: array });
   }
   s;
@@ -37,9 +37,13 @@ class Categories extends React.Component {
     return (
       <ScrollView style={styles.container}>
         {this.state.categories.map((el, i) => {
+          console.log(el);
           return (
-            <TouchableOpacity key={i}>
-              <Folder name={el[0]} color={el[1].color} />
+            <TouchableOpacity
+              key={i}
+              onPress={() => this.props.setCategory(el)}
+            >
+              <Folder fontSize={30} size={250} name={el[0]} color={el[1].color} marginTop={-40}/>
             </TouchableOpacity>
           );
         })}
