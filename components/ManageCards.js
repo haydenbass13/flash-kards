@@ -8,13 +8,19 @@ import {
   Button,
   TouchableOpacity,
   TextInput,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
 
 //utilities
 
 //components
 import Folder from "./Folder";
+import NewCard from "./NewCard";
+import Card from "./Card";
+import Progress from "./Progress";
+import Study from "./Study";
+
 const models = require("../utils/models");
 
 //config
@@ -28,13 +34,23 @@ class Manage extends React.Component {
     };
   }
 
-  async componentDidMount() {
-    let category = await models._getOne(JSON.stringify(this.props.category));
-    console.log(category);
+  componentDidMount() {
+    if (
+      this.state.config.easy.length === 0 &&
+      this.state.config.hard.length === 0 &&
+      this.state.config.medium.length === 0 &&
+      this.state.config.unrated.length === 0
+    ) {
+      Alert.alert("No Cards Yet", "", [
+        { text: "Add Cards", onPress: () => this.props.toggleScreen(NewCard) },
+        { text: "OK" }
+      ]);
+    }
   }
 
   render() {
-    console.log(this.props);
+    let config = this.props.category[1];
+    console.log(config);
     return (
       <View style={styles.container}>
         <View style={styles.head}>
@@ -46,10 +62,52 @@ class Manage extends React.Component {
             marginTop={90}
           />
         </View>
+        <View style={styles.buttons}>
+          <Button
+            title="Add Cards"
+            onPress={() => this.props.toggleScreen(NewCard)}
+          />
+          <Button
+            title="Study"
+            onPress={() => this.props.toggleScreen(Study)}
+          />
+          <Button
+            title="Progress"
+            onPress={() => this.props.toggleScreen(Progress)}
+          />
+        </View>
         <View />
         <ScrollView contentContainerStyle={styles.cards}>
-          <TextInput>{JSON.stringify(this.state.config)}</TextInput>
+          <View>
+            {config.unrated.map((el, i) => {
+              return (
+                <Card key={i} data={el} height={"auto"} studyMode={false} />
+              );
+            })}
+          </View>
+          <View>
+            {config.easy.map((el, i) => {
+              return (
+                <Card key={i} data={el} height={"auto"} studyMode={false} />
+              );
+            })}
+          </View>
+          <View>
+            {config.medium.map((el, i) => {
+              return (
+                <Card key={i} data={el} height={"auto"} studyMode={false} />
+              );
+            })}
+          </View>
+          <View>
+            {config.hard.map((el, i) => {
+              return (
+                <Card key={i} data={el} height={"auto"} studyMode={false} />
+              );
+            })}
+          </View>
         </ScrollView>
+        
       </View>
     );
   }
@@ -59,30 +117,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 30
-    // backgroundColor: "#fff",
-    // // alignItems: "center",
-    // justifyContent: "center"
   },
   head: {
-    // flex: 1,
-    // flexDirection: 'column',
-    // position: 'absolute',
     justifyContent: "center",
-    // alignItems: 'center',
-    // justifyContent: 'flex-start',
     height: 150
   },
-  cards: {
-    // flex: 2,
-    // justifyContent: "center"
-    // alignItems: 'center'
-  },
+  cards: {},
   headText: {
     alignSelf: "center"
-    // position: 'absolute'
   },
   folder: {
     alignSelf: "center"
+  },
+  buttons: {
+
+    flexDirection: 'row',
+    justifyContent: 'center'
+    // height: 40,
+    // marginBottom:20
   }
 });
 

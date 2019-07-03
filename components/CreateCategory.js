@@ -36,7 +36,7 @@ class CreateCategory extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  create = () => {
+  async create() {
     let categoryObj = {
       name: this.state.name,
       config: {
@@ -47,16 +47,15 @@ class CreateCategory extends React.Component {
         color: this.state.color
       }
     };
-    models._createCategory(categoryObj);
-  };
+    const newCat = await models._createCategory(categoryObj);
+    return this.props.setCategory(newCat);
+  }
 
   click(color, e) {
-    console.log(color)
     this.setState({ color });
   }
 
   handleChange() {
-    // const value = this._form.getValue();
     this.setState({ name: value });
   }
 
@@ -68,14 +67,17 @@ class CreateCategory extends React.Component {
       "rgba(30, 130, 76, 1)",
       "rgba(83, 51, 237, 1)",
       "rgba(103, 65, 114, 1)",
-      "rgba(46, 49, 49, 1)",
+      "rgba(95, 73, 73, 1)",
       "rgba(218, 223, 225, 1)"
     ];
     return (
       <View style={styles.container}>
         <Folder
           name={this.state.name ? this.state.name : "Category Name"}
-          color={this.state.color} size={250} fontSize={30} marginTop={-40}
+          color={this.state.color}
+          size={250}
+          fontSize={30}
+          marginTop={-40}
         />
         <View>
           <View style={styles.formContainer}>
