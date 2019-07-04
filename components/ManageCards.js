@@ -50,7 +50,7 @@ class Manage extends React.Component {
 
   render() {
     let config = this.props.category[1];
-    console.log(config);
+
     return (
       <View style={styles.container}>
         <View style={styles.head}>
@@ -67,14 +67,24 @@ class Manage extends React.Component {
             title="Add Cards"
             onPress={() => this.props.toggleScreen(NewCard)}
           />
-          <Button
-            title="Study"
-            onPress={() => this.props.toggleScreen(Study)}
-          />
-          <Button
-            title="Progress"
-            onPress={() => this.props.toggleScreen(Progress)}
-          />
+          {this.state.config.easy.length === 0 &&
+          this.state.config.hard.length === 0 &&
+          this.state.config.medium.length === 0 &&
+          this.state.config.unrated.length === 0 ? null : (
+            <Button
+              title="Study"
+              onPress={() => this.props.toggleScreen(Study)}
+            />
+          )}
+          {this.state.config.easy.length === 0 &&
+          this.state.config.hard.length === 0 &&
+          this.state.config.medium.length === 0 &&
+          this.state.config.unrated.length === 0 ? null : (
+            <Button
+              title="Progress"
+              onPress={() => this.props.toggleScreen(Progress)}
+            />
+          )}
         </View>
         <View />
         <ScrollView contentContainerStyle={styles.cards}>
@@ -107,7 +117,6 @@ class Manage extends React.Component {
             })}
           </View>
         </ScrollView>
-        
       </View>
     );
   }
@@ -130,9 +139,8 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   buttons: {
-
-    flexDirection: 'row',
-    justifyContent: 'center'
+    flexDirection: "row",
+    justifyContent: "center"
     // height: 40,
     // marginBottom:20
   }

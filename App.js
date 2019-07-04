@@ -6,7 +6,8 @@ import {
   View,
   AsyncStorage,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from "react-native";
 import t from "tcomb-form-native";
 
@@ -19,6 +20,7 @@ import Manage from "./components/ManageCards";
 import NewCard from "./components/NewCard";
 import Progress from "./components/Progress";
 import Study from "./components/Study";
+import loader from './assets/loader.gif'
 const models = require("./utils/models");
 //config
 const Form = t.form.Form;
@@ -40,7 +42,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentScreen: Categories,
-      selectedCategory: null
+      selectedCategory: null,
+      loading: true
     };
     this.toggleScreen = this.toggleScreen.bind(this);
     this.setCategory = this.setCategory.bind(this);
@@ -68,7 +71,7 @@ class App extends React.Component {
       array.push([JSON.parse(categories[i][0]), JSON.parse(categories[i][1])]);
     }
     array = array.sort((a, b) => a[0] > b[0]);
-    this.setState({ categories: array });
+    return this.setState({ categories: array, loading: false });
   }
 
   // async componentDidUpdate(prevProps, prevState) {
@@ -94,13 +97,14 @@ class App extends React.Component {
     let Comp = this.state.currentScreen;
     return (
       <View style={styles.container}>
-        <Comp
+        {this.state.loading ? <Image  source={require('./assets/loader.gif')}/> : null}
+        {!this.state.loading ? <Comp
           category={this.state.selectedCategory}
           setCategory={this.setCategory}
           toggleScreen={this.toggleScreen}
           categories={this.state.categories}
           setScreen={this.setScreen}
-        />
+        /> : null}
         {/* <Button title="delete all" onPress={() => models._deleteAll()} /> */}
         <View style={styles.nav}>
           <TouchableOpacity onPress={() => this.toggleScreen(CreateCategory)}>

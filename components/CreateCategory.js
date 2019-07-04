@@ -17,6 +17,7 @@ const models = require("../utils/models");
 
 //components
 import Folder from "./Folder";
+import Manage from './ManageCards'
 
 //config
 const Form = t.form.Form;
@@ -48,7 +49,8 @@ class CreateCategory extends React.Component {
       }
     };
     const newCat = await models._createCategory(categoryObj);
-    return this.props.setCategory(newCat);
+  this.props.setCategory(newCat);
+  this.props.setScreen(Manage)
   }
 
   click(color, e) {

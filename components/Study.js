@@ -11,8 +11,7 @@ import {
 import _ from "lodash";
 
 import Folder from "./Folder";
-import Manage from './ManageCards'
-
+import Manage from "./ManageCards";
 
 const models = require("../utils/models");
 
@@ -25,11 +24,16 @@ class Study extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
-      <View>
-        <Text>{this.props.category[0]}</Text>
-        <Button title="Back to all cards" onPress={() => this.props.toggleScreen(Manage)}/>
+      <View style={styles.container}>
+        <View style={styles.head}>
+          <Text>{this.props.category[0]}</Text>
+        </View>
+        <Button
+          title="Back to all cards"
+          onPress={() => this.props.toggleScreen(Manage)}
+        />
       </View>
     );
   }
@@ -39,6 +43,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 40
+  },
+  head: {
+    flex:1
   }
 });
 export default Study;

@@ -15,10 +15,12 @@ import {
 
 import Folder from "./Folder";
 import Manage from './ManageCards'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30
+    marginTop: 30,
+    justifyContent: 'space-evenly'
   },
   head: {
     justifyContent: "center",
@@ -61,14 +63,15 @@ class Progress extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     const category = this.props.category;
+    console.log(category, 'categoryyyyyyyyyyy')
     const chart_wh = 250;
     const series = [
-      category[1].easy.length,
-      category[1].medium.length,
-      category[1].hard.length,
-      category[1].unrated.length
+      category[1].easy.length || null,
+      category[1].medium.length || null,
+      category[1].hard.length || null,
+      category[1].unrated.length || null
     ];
     const sliceColor = ["#4CAF50", "#FFEB3B", "#F44336", "#2196F3"];
     const levels = ["Easy", "Medium", "Hard", "Unrated"];

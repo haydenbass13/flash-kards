@@ -12,10 +12,10 @@ import {
 } from "react-native";
 
 import Folder from "./Folder";
-import Manage from './ManageCards'
+import Manage from "./ManageCards";
 import { NativeModulesProxy } from "@unimodules/core";
 
-const models = require('../utils/models')
+const models = require("../utils/models");
 
 class NewCard extends React.Component {
   constructor(props) {
@@ -23,27 +23,33 @@ class NewCard extends React.Component {
     this.state = {
       UID: this.props.category[0],
       config: this.props.category[1],
-      question: 'Front',
-      answer: 'Back'
+      question: "Front",
+      answer: "Back"
     };
-    this.submit = this.submit.bind(this)
+    this.submit = this.submit.bind(this);
   }
 
   async submit() {
     let config = this.state.config;
-    let id = config.easy.length + config.medium.length + config.hard.length + config.unrated.length;
-    config.unrated.push({id, Q: this.state.question, A: this.state.answer})
+    let id =
+      config.easy.length +
+      config.medium.length +
+      config.hard.length +
+      config.unrated.length;
+    config.unrated.push({ id, Q: this.state.question, A: this.state.answer });
     let card = {
-      config, name: this.state.UID
-    }
+      config,
+      name: this.state.UID
+    };
     // console.log(card)
-    await models._update(card)
-    Alert.alert(
-      'Add another card?',
-      '',
-      [{text: 'Yes', onPress: this.setState({question: 'Front', answer: "Back"})}, {text: 'NO',onPress: () => this.props.toggleScreen(Manage)}]
-    )
-
+    await models._update(card);
+    Alert.alert("Add another card?", "", [
+      {
+        text: "Yes",
+        onPress: this.setState({ question: "Front", answer: "Back" })
+      },
+      { text: "NO", onPress: () => this.props.toggleScreen(Manage) }
+    ]);
   }
 
   componentDidMount() {
@@ -61,23 +67,25 @@ class NewCard extends React.Component {
             marginTop={90}
           />
         </View>
-        <View>
+        <View styles={styles.card}>
           <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+            style={styles.text}
             onChangeText={question => this.setState({ question })}
             placeholder={this.state.question}
           />
           <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+            style={styles.text}
             onChangeText={answer => this.setState({ answer })}
             placeholder={this.state.answer}
           />
+          <Button title="Add" onPress={this.submit} />
         </View>
-        <TouchableOpacity onPress={this.submit}>
-          <Text>Add</Text>
-        </TouchableOpacity>
-        <View />
-        <Button title="Back to all cards" onPress={() => this.props.toggleScreen(Manage)}/>
+        <View style={styles.back}>
+          <Button
+            title="Back to all cards"
+            onPress={() => this.props.toggleScreen(Manage)}
+          />
+        </View>
       </View>
     );
   }
@@ -86,13 +94,20 @@ class NewCard extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30
+    marginTop: 30,
+    justifyContent: "space-between"
   },
   head: {
     justifyContent: "center",
     height: 150
   },
-  
+  text: {
+    margin: 20,
+    height: 60,
+    borderColor: "gray",
+    borderWidth: 1
+  },
+  back: {}
 });
 
 export default NewCard;

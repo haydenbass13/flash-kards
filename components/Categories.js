@@ -22,16 +22,16 @@ class Categories extends React.Component {
       categories: this.props.categories || []
     };
   }
-  // async componentDidMount() {
-  //   const categories = await models._getAllCategories();
-  //   let array = [];
-  //   for (var i = 0; i < categories.length; i++) {
-  //     let temp = JSON.parse(categories[i][1]);
-  //     array.push([JSON.parse(categories[i][0]), JSON.parse(categories[i][1])]);
-  //   }
-  //   array = array.sort((a, b) => a[0] > b[0]);
-  //   this.setState({ categories: array });
-  // }
+  async componentDidMount() {
+    const categories = await models._getAllCategories();
+    let array = [];
+    for (var i = 0; i < categories.length; i++) {
+      let temp = JSON.parse(categories[i][1]);
+      array.push([JSON.parse(categories[i][0]), JSON.parse(categories[i][1])]);
+    }
+    array = array.sort((a, b) => a[0] > b[0]);
+    this.setState({ categories: array });
+  }
 
   render() {
     return (
