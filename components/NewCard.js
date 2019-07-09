@@ -56,6 +56,7 @@ class NewCard extends React.Component {
     // console.log(this.props);
   }
   render() {
+    console.log(this.props, 'new card props')
     return (
       <View style={styles.container}>
         <View style={styles.head}>

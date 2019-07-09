@@ -20,8 +20,9 @@ import Manage from "./components/ManageCards";
 import NewCard from "./components/NewCard";
 import Progress from "./components/Progress";
 import Study from "./components/Study";
-import loader from './assets/loader.gif'
 const models = require("./utils/models");
+const loader = require('./assets/loader.gif')
+
 //config
 const Form = t.form.Form;
 
@@ -61,6 +62,7 @@ class App extends React.Component {
     // let prev = this.state.currentScreen;
     this.setState({ currentScreen: screen });
   }
+  
 
   async componentDidMount() {
     console.log("mounted app making request");
@@ -74,45 +76,34 @@ class App extends React.Component {
     return this.setState({ categories: array, loading: false });
   }
 
-  // async componentDidUpdate(prevProps, prevState) {
-  //   if (
-  //     prevState.categories &&
-  //     prevState.categories.length !== this.state.categories.length
-  //   ) {
-  //     const categories = await models._getAllCategories();
-  //     let array = [];
-  //     for (var i = 0; i < categories.length; i++) {
-  //       let temp = JSON.parse(categories[i][1]);
-  //       array.push([
-  //         JSON.parse(categories[i][0]),
-  //         JSON.parse(categories[i][1])
-  //       ]);
-  //     }
-  //     array = array.sort((a, b) => a[0] > b[0]);
-  //     this.setState({ categories: array });
-  //   }
-  // }
-
   render() {
     let Comp = this.state.currentScreen;
     return (
       <View style={styles.container}>
-        {this.state.loading ? <Image  source={require('./assets/loader.gif')}/> : null}
-        {!this.state.loading ? <Comp
-          category={this.state.selectedCategory}
-          setCategory={this.setCategory}
-          toggleScreen={this.toggleScreen}
-          categories={this.state.categories}
-          setScreen={this.setScreen}
-        /> : null}
-        {/* <Button title="delete all" onPress={() => models._deleteAll()} /> */}
+        {/* <Image source={loader} /> */}
+        {this.state.loading ? (
+          <Image source={"./assets/loader.gif"} />
+        ) : null}
+        {!this.state.loading ? (
+          <Comp
+            category={this.state.selectedCategory}
+            setCategory={this.setCategory}
+            toggleScreen={this.toggleScreen}
+            categories={this.state.categories}
+            setScreen={this.setScreen}
+            editCard={this.editCard}
+          />
+        ) : null}
+        <Button title="delete all" onPress={() => models._deleteAll()} />
         <View style={styles.nav}>
-          <TouchableOpacity onPress={() => this.toggleScreen(CreateCategory)}>
-            <Text>New Category</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.toggleScreen(Categories)}>
-            <Text>Categories</Text>
-          </TouchableOpacity>
+          <Button
+            title="New Category"
+            onPress={() => this.toggleScreen(CreateCategory)}
+          />
+          <Button
+            title="Categories"
+            onPress={() => this.toggleScreen(Categories)}
+          />
         </View>
       </View>
     );
@@ -127,11 +118,12 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   nav: {
-    height: 70,
+    height: 50,
     flexDirection: "row",
-    alignItems: "center",
-    lineHeight: 70,
-    justifyContent: "space-evenly"
+    alignItems: "flex-start",
+    lineHeight: 50,
+    justifyContent: "space-evenly",
+    backgroundColor: '#fcfcfc'
   }
 });
 

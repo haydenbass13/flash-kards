@@ -19,28 +19,47 @@ class Card extends React.Component {
     };
   }
   render() {
+    const colors = {
+      easy: "#4CAF50",
+      medium: "#FFEB3B",
+      hard: "#F44336",
+      unrated: "#2196F3"
+    };
+    console.log(this.props);
     return (
-      <View>
-        <View
-          style={{ ...styles.card, height: this.props.height }}
-        >
-          <Text style={styles.textHeader}>Front: </Text>
-          <Text style={{ ...styles.text, ...styles.q }}>
-            {this.props.data.Q}
-          </Text>
-          {!this.state.studyMode ? (
-            <Text style={styles.textHeader}>Back: </Text>
-          ) : null}
-          {!this.state.studyMode && !this.state.flipped ? (
+      <TouchableOpacity
+        style={{
+          ...styles.card,
+          height: this.props.height,
+          backgroundColor: colors[this.props.diff]
+        }}
+        onPress={() => this.props.editCard(this.props)}
+      >
+        <View style={styles.textWrapper}>
+          <View style={{ backgroundColor: "white" }}>
+            <Text style={styles.textHeader}>Front: </Text>
             <Text style={{ ...styles.text, ...styles.q }}>
-              {this.props.data.A}
+              {/* {this.props.data.Q} */}
             </Text>
-          ) : null}
+            {!this.state.studyMode ? (
+              <Text style={styles.textHeader}>Back: </Text>
+            ) : null}
+            {!this.state.studyMode && !this.state.flipped ? (
+              <Text style={{ ...styles.text, ...styles.q }}>
+                {JSON.stringify(this.props.data)}
+              </Text>
+            ) : null}
+          </View>
         </View>
-      </View>
+        <View
+          style={{ ...styles.diff, backgroundColor: colors[this.props.diff] }}
+        />
+      </TouchableOpacity>
     );
   }
 }
+//change the background color of the card to props
+//make the background of the text area white and cover 95% of the card, float left to expost card color on the right
 
 export default Card;
 
@@ -48,18 +67,26 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     borderStyle: "solid",
-    borderWidth: 1,
+    borderWidth: 2,
     margin: 10,
     borderRadius: 5,
-    padding: 10
+    borderColor: "#f0f0f0",
+    // padding: 10,
+    flexDirection: "row"
     // backgroundColor: "rgba(255, 255, 136, 0.2)"
   },
   text: {
     fontSize: 25,
-    marginVertical: 10
+    margin: 10
   },
   textHeader: {
-    fontSize: 20
+    fontSize: 20,
+    marginTop: 10,
+    marginHorizontal: 10
+  },
+  textWrapper: {
+    height: "100%",
+    width: "95%"
   },
   q: {},
   a: {}

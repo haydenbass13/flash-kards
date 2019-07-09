@@ -20,6 +20,7 @@ import NewCard from "./NewCard";
 import Card from "./Card";
 import Progress from "./Progress";
 import Study from "./Study";
+import EditCard from './EditCard'
 
 const models = require("../utils/models");
 
@@ -30,10 +31,14 @@ class Manage extends React.Component {
     super(props);
     this.state = {
       UID: this.props.category[0],
-      config: this.props.category[1]
+      config: this.props.category[1],
+      edit: null
     };
+    this.editCard = this.editCard.bind(this)
   }
-
+  editCard(props) {
+   return this.state.edit ? this.setState({edit: null}) : this.setState({edit: props})
+  }
   componentDidMount() {
     if (
       this.state.config.easy.length === 0 &&
@@ -87,36 +92,65 @@ class Manage extends React.Component {
           )}
         </View>
         <View />
+        {this.state.edit ? (<EditCard edit={this.state.edit} back={this.editCard} {...this.props} />) : 
         <ScrollView contentContainerStyle={styles.cards}>
           <View>
             {config.unrated.map((el, i) => {
               return (
-                <Card key={i} data={el} height={"auto"} studyMode={false} />
+                <Card
+                  diff="unrated"
+                  key={i}
+                  data={el}
+                  height={"auto"}
+                  studyMode={false}
+                  editCard={this.editCard}
+                />
               );
             })}
           </View>
           <View>
             {config.easy.map((el, i) => {
               return (
-                <Card key={i} data={el} height={"auto"} studyMode={false} />
+                <Card
+                  diff="easy"
+                  key={i}
+                  data={el}
+                  height={"auto"}
+                  studyMode={false}
+                  editCard={this.editCard}
+                />
               );
             })}
           </View>
           <View>
             {config.medium.map((el, i) => {
               return (
-                <Card key={i} data={el} height={"auto"} studyMode={false} />
+                <Card
+                  diff="medium"
+                  key={i}
+                  data={el}
+                  height={"auto"}
+                  studyMode={false}
+                  editCard={this.editCard}
+                />
               );
             })}
           </View>
           <View>
             {config.hard.map((el, i) => {
               return (
-                <Card key={i} data={el} height={"auto"} studyMode={false} />
+                <Card
+                  diff="hard"
+                  key={i}
+                  data={el}
+                  height={"auto"}
+                  studyMode={false}
+                  editCard={this.editCard}
+                />
               );
             })}
           </View>
-        </ScrollView>
+        </ScrollView>}
       </View>
     );
   }
